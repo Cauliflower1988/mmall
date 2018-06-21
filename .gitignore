@@ -45,5 +45,3 @@ target/
 # system ignore
 .DS_Store
 Thumbs.db
-src/main/resources/mmall.properties
-src/main/resources/datasource.properties
