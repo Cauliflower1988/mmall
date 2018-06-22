@@ -151,4 +151,22 @@ public class UserController {
         return iUserService.forgetResetPassword(username,passowrdNew,forgetToken);
     }
 
+    /*
+     * @Description: 登录状态的重置密码
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/6/22 15:40
+     * @param: 
+     * @return: 
+     */
+    @RequestMapping(value = "reset_password.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> resetPassword(HttpSession session,String passwordOld,String passwordNew){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorMessgae("用户未登录");
+        }
+        return iUserService.resetPassword(passwordOld,passwordNew,user);
+    }
+
 }
