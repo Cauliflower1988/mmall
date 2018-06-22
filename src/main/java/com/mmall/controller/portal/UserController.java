@@ -135,4 +135,20 @@ public class UserController {
     public ServerResponse<String> forgetCheckAnswer(String username,String question,String answer){
         return iUserService.checkAnswer(username,question,answer);
     }
+
+    /*
+     * @Description: 忘记密码中的重置密码
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/6/22 15:30
+     * @param: 
+     * @return: 
+     */
+
+    @RequestMapping(value = "forget_reset_password.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> forgetRestPassword(String username,String passowrdNew,String forgetToken){
+        return iUserService.forgetResetPassword(username,passowrdNew,forgetToken);
+    }
+
 }
