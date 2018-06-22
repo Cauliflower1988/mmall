@@ -103,7 +103,7 @@ public class UserController {
         if(user != null){
             return ServerResponse.createBySuccess(user);
         }
-        return ServerResponse.createByErrorMessgae("用户未登录，无法获取当前用户的信息");
+        return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
     }
     /*
      * @Description: 忘记密码
@@ -152,21 +152,47 @@ public class UserController {
     }
 
     /*
-     * @Description: 登录状态的重置密码
+     * @Description: 登录状态下重置密码
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/6/22 15:40
-     * @param: 
-     * @return: 
+     * @date: 2018/6/22 16:08
+     * @param: [session, passwordOld, passwordNew]
+     * @return: com.mmall.common.ServerResponse<java.lang.String>
      */
     @RequestMapping(value = "reset_password.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<String> resetPassword(HttpSession session,String passwordOld,String passwordNew){
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorMessgae("用户未登录");
+            return ServerResponse.createByErrorMessage("用户未登录");
         }
         return iUserService.resetPassword(passwordOld,passwordNew,user);
     }
+    
+    /*
+     * @Description: 更新用户个人信息功能
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/6/22 16:27
+     * @param: [session, user]
+     * @return: com.mmall.common.ServerResponse<com.mmall.pojo.User>
+     */
+    @RequestMapping(value = "update_information.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> update_information(HttpSession session,User user){
+        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
+        if(currentUser == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        user.setId(currentUser.getId());
+        user.setUsername(currentUser.getUsername());
+        ServerResponse<User> response = iUserService.updateInformation(user);
+        if(response.isSuccess()){
+            session.setAttribute(Const.CURRENT_USER,response.getData());
+        }
+        return response;
+    }
+
+
 
 }
