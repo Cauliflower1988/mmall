@@ -72,9 +72,67 @@ public class UserController {
     public ServerResponse<String> register(User user){
         return iUserService.register(user);
     }
+
+    /*
+     * @Description: 校验功能
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/6/22 14:51
+     * @param: [str, type]
+     * @return: com.mmall.common.ServerResponse<java.lang.String>
+     */
     @RequestMapping(value = "check_valid.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<String> checkValid(String str,String type){
         return iUserService.checkValid(str,type);
+    }
+
+    /*
+     * @Description: 获取用户登录信息
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/6/22 14:52
+     * @param: 
+     * @return: 
+     */
+
+    @RequestMapping(value = "get_user_info.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> getUserInfo(HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user != null){
+            return ServerResponse.createBySuccess(user);
+        }
+        return ServerResponse.createByErrorMessgae("用户未登录，无法获取当前用户的信息");
+    }
+    /*
+     * @Description: 忘记密码
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/6/22 14:52
+     * @param: [username]
+     * @return: com.mmall.common.ServerResponse<java.lang.String>
+     */
+
+    @RequestMapping(value = "forget_get_question.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> forgetGetQuestion(String username){
+        return iUserService.selectQuestion(username);
+    }
+
+
+    /*
+     * @Description: 检查问题答案
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/6/22 14:53
+     * @param: 
+     * @return: 
+     */
+
+    @RequestMapping(value = "forget_check_answer.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> forgetCheckAnswer(String username,String question,String answer){
+        return iUserService.checkAnswer(username,question,answer);
     }
 }
