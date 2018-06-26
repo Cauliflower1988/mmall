@@ -1,9 +1,9 @@
 /*
- * @Author: weimin
- * @Date:   2017-05-08 15:19:12
- * @Last Modified by:   weimin
- * @Last Modified time: 2017-07-12 19:36:18
- */
+* @Author: mmall
+* @Date:   2017-05-27 17:57:49
+* @Last Modified by:   Rosen
+* @Last Modified time: 2017-05-28 19:48:16
+*/
 
 'use strict';
 require('./index.css');
@@ -15,7 +15,7 @@ var Pagination      = require('util/pagination/index.js');
 var templateIndex   = require('./index.string');
 
 var page = {
-    data           : {
+    data : {
         listParam : {
             keyword         : _mm.getUrlParam('keyword')    || '',
             categoryId      : _mm.getUrlParam('categoryId') || '',
@@ -24,14 +24,14 @@ var page = {
             pageSize        : _mm.getUrlParam('pageSize')   || 20
         }
     },
-    init           : function(){
+    init : function(){
         this.onLoad();
         this.bindEvent();
     },
-    onLoad         : function(){
-        this.loadPaymentInfo();
+    onLoad : function(){
+        this.loadList();
     },
-    bindEvent      : function(){
+    bindEvent : function(){
         var _this = this;
         // 排序的点击事件
         $('.sort-item').click(function(){
@@ -65,11 +65,11 @@ var page = {
                 }
             }
             // 重新加载列表
-            _this.loadPaymentInfo();
+            _this.loadList();
         });
     },
     // 加载list数据
-    loadPaymentInfo: function(){
+    loadList : function(){
         var _this       = this,
             listHtml    = '',
             listParam   = this.data.listParam,
@@ -104,11 +104,11 @@ var page = {
             container : $('.pagination'),
             onSelectPage : function(pageNum){
                 _this.data.listParam.pageNum = pageNum;
-                _this.loadPaymentInfo();
+                _this.loadList();
             }
         }));
     }
 };
 $(function(){
     page.init();
-});
+})

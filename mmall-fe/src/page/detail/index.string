@@ -40,7 +40,6 @@
         </ul>
     </div>
     <div class="detail-con">
-        <!-- 三层括号表示对渲染方式的加载 -->
         {{{detail}}}
     </div>
 </div>

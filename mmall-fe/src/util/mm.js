@@ -1,6 +1,9 @@
-/**
- * Created by weimin on 2017/6/13.
- */
+/*
+* @Author: Rosen
+* @Date:   2017-05-15 15:26:38
+* @Last Modified by:   Rosen
+* @Last Modified time: 2017-05-21 14:58:37
+*/
 
 'use strict';
 var Hogan = require('hogan');
@@ -8,42 +11,44 @@ var conf = {
     serverHost : ''
 };
 var _mm = {
-    //网络请求
-    request : function (param) {
+    // 网络请求
+    request : function(param){
         var _this = this;
         $.ajax({
             type        : param.method  || 'get',
             url         : param.url     || '',
-            dataType    : param.type    ||'json',
-            data        : param.data    ||'',
-            success     : function (res) {
-                if(0===res.status){
+            dataType    : param.type    || 'json',
+            data        : param.data    || '',
+            success     : function(res){
+                // 请求成功
+                if(0 === res.status){
                     typeof param.success === 'function' && param.success(res.data, res.msg);
-                }else if(10===res.status){
-                    //没有登陆状态，需要强制登陆
+                }
+                // 没有登录状态，需要强制登录
+                else if(10 === res.status){
                     _this.doLogin();
-                }else if(1 === res.status){
-                    //请求数据错误
+                }
+                // 请求数据错误
+                else if(1 === res.status){
                     typeof param.error === 'function' && param.error(res.msg);
                 }
             },
-            error       : function (err) {
+            error       : function(err){
                 typeof param.error === 'function' && param.error(err.statusText);
             }
         });
-
     },
-    //获取服务器地址
+    // 获取服务器地址
     getServerUrl : function(path){
         return conf.serverHost + path;
     },
-    //获取url参数
-    getUrlParam :function(name){
+    // 获取url参数
+    getUrlParam : function(name){
         var reg     = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
         var result  = window.location.search.substr(1).match(reg);
         return result ? decodeURIComponent(result[2]) : null;
     },
-    //渲染html模板
+    // 渲染html模板
     renderHtml : function(htmlTemplate, data){
         var template    = Hogan.compile(htmlTemplate),
             result      = template.render(data);
@@ -51,13 +56,13 @@ var _mm = {
     },
     // 成功提示
     successTips : function(msg){
-        alert(msg||'操作成功！');
+        alert(msg || '操作成功！');
     },
     // 错误提示
     errorTips : function(msg){
         alert(msg || '哪里不对了~');
     },
-    // 表单验证,支持非空判断，手机、邮箱格式判断等。
+    // 字段的验证，支持非空、手机、邮箱的判断
     validate : function(value, type){
         var value = $.trim(value);
         // 非空验证

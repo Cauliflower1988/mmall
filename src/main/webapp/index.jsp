@@ -1,6 +1,6 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <html>
 <body>
-<meta charset="utf-8">
 <h2>Hello World!</h2>
 
 springmvc上传文件
