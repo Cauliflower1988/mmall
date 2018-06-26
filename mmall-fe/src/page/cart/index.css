@@ -1,17 +1,10 @@
-/*
-* @Author: Rosen
-* @Date:   2017-05-30 16:51:30
-* @Last Modified by:   Rosen
-* @Last Modified time: 2017-06-02 11:38:22
-*/
-
- .cart-table{
+.cart-table{
     width: 100%;
     border-collapse: collapse;
     border: 1px solid #ebebeb;
     margin-bottom: 10px;
 }
-/* header */
+/*header*/
 .cart-header{
     background: #eee;
 }
@@ -20,22 +13,22 @@
     line-height: 40px;
 }
 .cart-table .cell-check{
-    width: 6%;
+    width:7%;
     text-align: left;
     padding-left: 20px;
 }
 .cart-table .cell-img{
-    width: 10%;
+    width:10%;
     text-align: left;
 }
 .cart-table .cell-img .p-img{
     margin: 10px 0;
     width: 80px;
-    height: 80px;
+    height:80px;
     border: 1px solid #ddd;
 }
 .cart-table .cell-info{
-    width: 35%;
+    width:35%;
     text-align: left;
 }
 .cart-header .cell-info{
@@ -43,11 +36,11 @@
     padding-left: 106px;
 }
 .cart-table .cell-price{
-    width: 10%;
+    width:10%;
     text-align: center;
 }
 .cart-table .cell-count{
-    width: 15%;
+    width:15%;
     text-align: center;
 }
 .cart-table .cell-count .count-input{
@@ -75,12 +68,12 @@
     user-select : none;
 }
 .cart-table .cell-total{
-    width: 14%;
+    width:13%;
     text-align: center;
     font-weight: bold;
 }
 .cart-table .cell-opera{
-    width: 10%;
+    width:10%;
     text-align: center;
 }
 

@@ -1,7 +1,7 @@
 /*
-* @Author: Rosen
+* @Author: weimin
 * @Date:   2017-05-08 15:19:12
-* @Last Modified by:   Rosen
+* @Last Modified by:   weimin
 * @Last Modified time: 2017-05-26 19:36:18
 */
 
@@ -27,4 +27,8 @@ $(function() {
         var forward = $(this).hasClass('prev') ? 'prev' : 'next';
         $slider.data('unslider')[forward]();
     });
+});
+
+$(function () {
+    $('.banner').unslider();
 });
