@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  * @Description:
  */
 @Controller
-@RequestMapping("/cart")
+@RequestMapping("/cart/")
 public class CartController {
 
     @Autowired

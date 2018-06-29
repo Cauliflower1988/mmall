@@ -5,17 +5,17 @@ import com.mmall.common.ServerResponse;
 import com.mmall.service.IProductService;
 import com.mmall.vo.ProductDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author: Geekerstar(jikewenku.com)
  * @Date: 2018/6/23 17:18
  * @Description:
  */
-@RestController
+@Controller
 @RequestMapping("/product/")
 public class ProductController {
 

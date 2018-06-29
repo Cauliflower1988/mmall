@@ -7,7 +7,7 @@ import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createByErrorMessage("密码错误");
         }
 
-        user.setPassword(StringUtils.EMPTY);
+        user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
         return ServerResponse.createBySuccess("登录成功",user);
     }
 
@@ -71,7 +71,7 @@ public class UserServiceImpl implements IUserService{
     }
 
     public ServerResponse<String> checkValid(String str,String type){
-        if(StringUtils.isNoneBlank(type)){
+        if(org.apache.commons.lang3.StringUtils.isNotBlank(type)){
             //开始校验
             if(Const.USERNAME.equals(type)){
                 int resultCount = userMapper.checkUsername(str);
@@ -99,7 +99,7 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createByErrorMessage("用户不存在");
         }
         String question = userMapper.selectQuestionByUsername(username);
-        if(StringUtils.isNoneBlank(question)){
+        if(org.apache.commons.lang3.StringUtils.isNotBlank(question)){
             return ServerResponse.createBySuccess(question);
         }
         return ServerResponse.createByErrorMessage("找回密码的问题是空的");
@@ -117,8 +117,8 @@ public class UserServiceImpl implements IUserService{
     }
 
     public ServerResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken){
-        if(StringUtils.isBlank(forgetToken)){
-            return ServerResponse.createByErrorMessage("参数错误，token需要传递");
+        if(org.apache.commons.lang3.StringUtils.isBlank(forgetToken)){
+            return ServerResponse.createByErrorMessage("参数错误,token需要传递");
         }
         ServerResponse validResponse = this.checkValid(username,Const.USERNAME);
         if(validResponse.isSuccess()){
@@ -126,18 +126,18 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createByErrorMessage("用户不存在");
         }
         String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX+username);
-        if(StringUtils.isBlank(token)){
+        if(org.apache.commons.lang3.StringUtils.isBlank(token)){
             return ServerResponse.createByErrorMessage("token无效或者过期");
         }
-        if(StringUtils.equals(forgetToken,token)){
+        if(org.apache.commons.lang3.StringUtils.equals(forgetToken,token)){
             String md5Password = MD5Util.MD5EncodeUtf8(passwordNew);
-            int rowCount = userMapper.updatePasswordByUsername(username,passwordNew);
+            int rowCount = userMapper.updatePasswordByUsername(username,md5Password);
 
             if(rowCount > 0){
                 return ServerResponse.createBySuccessMessage("修改密码成功");
             }
         }else{
-            return ServerResponse.createByErrorMessage("token错误，请重新获取重置密码的token");
+            return ServerResponse.createByErrorMessage("token错误,请重新获取重置密码的token");
         }
         return ServerResponse.createByErrorMessage("修改密码失败");
 
@@ -163,7 +163,7 @@ public class UserServiceImpl implements IUserService{
         //email也要进行一个校验，校验新的email是不是已经存在，并且存在的email如果相同的话，不能是我们当前这个用户的
         int resultCount = userMapper.checkEmailByUserId(user.getEmail(),user.getId());
         if(resultCount > 0){
-            return ServerResponse.createBySuccessMessage("email已存在，请更换email再尝试更新");
+            return ServerResponse.createByErrorMessage("email已存在,请更换email再尝试更新");
         }
         User updateUser = new User();
         updateUser.setId(user.getId());
@@ -185,7 +185,7 @@ public class UserServiceImpl implements IUserService{
         if(user == null){
             return ServerResponse.createByErrorMessage("找不到当前用户");
         }
-        user.setPassword(StringUtils.EMPTY);
+        user.setPassword(org.apache.commons.lang3.StringUtils.EMPTY);
         return ServerResponse.createBySuccess(user);
     }
 

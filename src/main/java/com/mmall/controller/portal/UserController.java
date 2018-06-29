@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.servlet.http.HttpSession;
 
 /**
@@ -104,7 +103,7 @@ public class UserController {
         if(user != null){
             return ServerResponse.createBySuccess(user);
         }
-        return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
+        return ServerResponse.createByErrorMessage("用户未登录,无法获取当前用户的信息");
     }
     /*
      * @Description: 忘记密码
@@ -148,8 +147,8 @@ public class UserController {
 
     @RequestMapping(value = "forget_reset_password.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> forgetRestPassword(String username,String passowrdNew,String forgetToken){
-        return iUserService.forgetResetPassword(username,passowrdNew,forgetToken);
+    public ServerResponse<String> forgetRestPassword(String username,String passwordNew,String forgetToken){
+        return iUserService.forgetResetPassword(username,passwordNew,forgetToken);
     }
 
     /*
@@ -189,6 +188,7 @@ public class UserController {
         user.setUsername(currentUser.getUsername());
         ServerResponse<User> response = iUserService.updateInformation(user);
         if(response.isSuccess()){
+            response.getData().setUsername(currentUser.getUsername());
             session.setAttribute(Const.CURRENT_USER,response.getData());
         }
         return response;
@@ -207,7 +207,7 @@ public class UserController {
     public ServerResponse<User> get_information(HttpSession session){
         User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
         if(currentUser == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"未登录，需要强制登录status=10");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"未登录,需要强制登录status=10");
         }
         return iUserService.getInformation(currentUser.getId());
     }

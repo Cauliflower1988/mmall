@@ -11,9 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-
+import org.apache.commons.collections.CollectionUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -34,7 +32,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     public ServerResponse addCategory(String categoryName,Integer parentId){
         if(parentId == null || StringUtils.isBlank(categoryName)){
-            return ServerResponse.createByErrorMessage("添加商品参数错误");
+            return ServerResponse.createByErrorMessage("添加品类参数错误");
         }
 
         Category category = new Category();
@@ -80,7 +78,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @param: [categoryId]
      * @return: com.mmall.common.ServerResponse
      */
-    public ServerResponse selectCategoryAndChildrenById(Integer categoryId){
+    public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId){
         Set<Category> categorySet = Sets.newHashSet();
         findChildCategory(categorySet,categoryId);
 
