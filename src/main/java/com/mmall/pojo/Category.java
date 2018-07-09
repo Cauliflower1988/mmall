@@ -94,7 +94,7 @@ public class Category {
 
         Category category = (Category) o;
 
-        return !(id != null ? ! id.equals(category.id) : category.id != null);
+        return !(id != null ? !id.equals(category.id) : category.id != null);
     }
 
     @Override
