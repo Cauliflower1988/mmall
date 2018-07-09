@@ -195,7 +195,7 @@
     
     <select id="checkPassword" resultType="int" parameterType="map">
         SELECT
-        COUNT (1)
+        count(1)
         FROM mmall_user
         WHERE password = #{password}
         and id = #{userId}

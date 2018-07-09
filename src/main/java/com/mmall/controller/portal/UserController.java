@@ -62,7 +62,7 @@ public class UserController {
      * @Description: 用户注册
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/6/22 12:09
+     * @date: 2018/7/9 13:29
      * @param: 
      * @return: 
      */

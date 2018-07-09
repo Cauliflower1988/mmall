@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @Description:
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-//保证序列化JSon的时候，如果是null的对象，可以也会消失
+//保证序列化JSon的时候，如果是null的对象，key也会消失
 public class ServerResponse<T> implements Serializable{
     private int status;
     private String msg;
