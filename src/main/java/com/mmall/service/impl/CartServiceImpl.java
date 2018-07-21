@@ -36,11 +36,19 @@ public class CartServiceImpl implements ICartService {
     @Autowired
     private ProductMapper productMapper;
 
+
+    /*
+     * @Description: 添加购物车
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 20:44   
+     * @param: [userId, productId, count]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
+     */
     public ServerResponse<CartVo> add(Integer userId, Integer productId, Integer count) {
         if (productId == null || count == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-
         Cart cart = cartMapper.selectCartByUserIdProductId(userId, productId);
         if (cart == null) {
             //这个产品不在这个购物车里,需要新增一个这个产品的记录
@@ -51,7 +59,7 @@ public class CartServiceImpl implements ICartService {
             cartItem.setUserId(userId);
             cartMapper.insert(cartItem);
         } else {
-            //这个产品已经在购物车里了.
+            //这个产品已经在购物车里了
             //如果产品已存在,数量相加
             count = cart.getQuantity() + count;
             cart.setQuantity(count);
@@ -60,6 +68,14 @@ public class CartServiceImpl implements ICartService {
         return this.list(userId);
     }
 
+    /*
+     * @Description: 更新购物车
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 20:45   
+     * @param: [userId, productId, count]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
+     */
     public ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count) {
         if (productId == null || count == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -72,6 +88,14 @@ public class CartServiceImpl implements ICartService {
         return this.list(userId);
     }
 
+    /*
+     * @Description: 购物车中删除商品
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 20:47   
+     * @param: [userId, productIds]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
+     */
     public ServerResponse<CartVo> deleteProduct(Integer userId, String productIds) {
         List<String> productList = Splitter.on(",").splitToList(productIds);
         if (CollectionUtils.isEmpty(productList)) {
@@ -81,16 +105,40 @@ public class CartServiceImpl implements ICartService {
         return this.list(userId);
     }
 
+    /*
+     * @Description: 查询
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 20:51   
+     * @param: [userId]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
+     */
     public ServerResponse<CartVo> list(Integer userId) {
         CartVo cartVo = this.getCartVoLimit(userId);
         return ServerResponse.createBySuccess(cartVo);
     }
 
+    /*
+     * @Description: 选择或者反选所有
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 20:54   
+     * @param: [userId, productId, checked]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
+     */
     public ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer productId, Integer checked) {
         cartMapper.checkedOrUncheckedProduct(userId, productId, checked);
         return this.list(userId);
     }
 
+    /*
+     * @Description: 获取购物车中产品数量
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 20:58
+     * @param: [userId]
+     * @return: com.mmall.common.ServerResponse<java.lang.Integer>
+     */
     public ServerResponse<Integer> getCartProductCount(Integer userId) {
         if (userId == null) {
             return ServerResponse.createBySuccess(0);
@@ -146,15 +194,12 @@ public class CartServiceImpl implements ICartService {
                     cartTotalPrice = BigDecimalUtil.add(cartTotalPrice.doubleValue(), cartProductVo.getProductTotalPrice().doubleValue());
                 }
                 cartProductVoList.add(cartProductVo);
-
-
             }
         }
         cartVo.setCartTotalPrice(cartTotalPrice);
         cartVo.setCartProductVoList(cartProductVoList);
         cartVo.setAllChecked(this.getAllCheckedStatus(userId));
         cartVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
-
         return cartVo;
     }
 

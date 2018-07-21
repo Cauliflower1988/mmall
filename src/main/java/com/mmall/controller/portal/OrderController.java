@@ -90,7 +90,14 @@ public class OrderController {
         return iOrderService.getOrderList(user.getId(), pageNum, pageSize);
     }
 
-
+    /*
+     * @Description: 支付
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:21   
+     * @param: [session, orderNo, request]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("pay.do")
     @ResponseBody
     public ServerResponse pay(HttpSession session, Long orderNo, HttpServletRequest request) {
@@ -102,11 +109,18 @@ public class OrderController {
         return iOrderService.pay(orderNo, user.getId(), path);
     }
 
+    /*
+     * @Description: 支付宝回调
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:39   
+     * @param: [request]
+     * @return: java.lang.Object
+     */
     @RequestMapping("alipay_callback.do")
     @ResponseBody
     public Object alipayCallback(HttpServletRequest request) {
         Map<String, String> params = Maps.newHashMap();
-
         Map requestParams = request.getParameterMap();
         for (Iterator iter = requestParams.keySet().iterator(); iter.hasNext(); ) {
             String name = (String) iter.next();

@@ -3,7 +3,7 @@ package com.mmall.common;
 /**
  * @Author: Geekerstar(jikewenku.com)
  * @Date: 2018/6/22 9:43
- * @Description:
+ * @Description:响应编码枚举类
  */
 public enum ResponseCode {
     SUCCESS(0, "SUCCESS"),

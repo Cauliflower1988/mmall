@@ -92,7 +92,14 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private ShippingMapper shippingMapper;
 
-
+    /*
+     * @Description: 创建订单
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:55
+     * @param: [userId, shippingId]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse createOrder(Integer userId, Integer shippingId) {
 
         //从购物车中获取数据
@@ -105,8 +112,6 @@ public class OrderServiceImpl implements IOrderService {
         }
         List<OrderItem> orderItemList = (List<OrderItem>) serverResponse.getData();
         BigDecimal payment = this.getOrderTotalPrice(orderItemList);
-
-
         //生成订单
         Order order = this.assembleOrder(userId, shippingId, payment);
         if (order == null) {
@@ -150,19 +155,13 @@ public class OrderServiceImpl implements IOrderService {
             orderVo.setReceiverName(shipping.getReceiverName());
             orderVo.setShippingVo(assembleShippingVo(shipping));
         }
-
         orderVo.setPaymentTime(DateTimeUtil.dateToStr(order.getPaymentTime()));
         orderVo.setSendTime(DateTimeUtil.dateToStr(order.getSendTime()));
         orderVo.setEndTime(DateTimeUtil.dateToStr(order.getEndTime()));
         orderVo.setCreateTime(DateTimeUtil.dateToStr(order.getCreateTime()));
         orderVo.setCloseTime(DateTimeUtil.dateToStr(order.getCloseTime()));
-
-
         orderVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
-
-
         List<OrderItemVo> orderItemVoList = Lists.newArrayList();
-
         for (OrderItem orderItem : orderItemList) {
             OrderItemVo orderItemVo = assembleOrderItemVo(orderItem);
             orderItemVoList.add(orderItemVo);
@@ -181,7 +180,6 @@ public class OrderServiceImpl implements IOrderService {
         orderItemVo.setCurrentUnitPrice(orderItem.getCurrentUnitPrice());
         orderItemVo.setQuantity(orderItem.getQuantity());
         orderItemVo.setTotalPrice(orderItem.getTotalPrice());
-
         orderItemVo.setCreateTime(DateTimeUtil.dateToStr(orderItem.getCreateTime()));
         return orderItemVo;
     }
@@ -200,13 +198,28 @@ public class OrderServiceImpl implements IOrderService {
         return shippingVo;
     }
 
+    /*
+     * @Description: 清空购物车
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:57   
+     * @param: [cartList]
+     * @return: void
+     */
     private void cleanCart(List<Cart> cartList) {
         for (Cart cart : cartList) {
             cartMapper.deleteByPrimaryKey(cart.getId());
         }
     }
 
-
+    /*
+     * @Description: 减少库存
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:57   
+     * @param: [orderItemList]
+     * @return: void
+     */
     private void reduceProductStock(List<OrderItem> orderItemList) {
         for (OrderItem orderItem : orderItemList) {
             Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
@@ -282,7 +295,14 @@ public class OrderServiceImpl implements IOrderService {
         return ServerResponse.createBySuccess(orderItemList);
     }
 
-
+    /*
+     * @Description: 取消订单
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:57
+     * @param: [userId, orderNo]
+     * @return: com.mmall.common.ServerResponse<java.lang.String>
+     */
     public ServerResponse<String> cancel(Integer userId, Long orderNo) {
         Order order = orderMapper.selectByUserIdAndOrderNo(userId, orderNo);
         if (order == null) {
@@ -302,20 +322,24 @@ public class OrderServiceImpl implements IOrderService {
         return ServerResponse.createByError();
     }
 
-
+    /*
+     * @Description: 从购物车中获取数据
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:57   
+     * @param: [userId]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse getOrderCartProduct(Integer userId) {
         OrderProductVo orderProductVo = new OrderProductVo();
         //从购物车中获取数据
-
         List<Cart> cartList = cartMapper.selectCheckedCartByUserId(userId);
         ServerResponse serverResponse = this.getCartOrderItem(userId, cartList);
         if (!serverResponse.isSuccess()) {
             return serverResponse;
         }
         List<OrderItem> orderItemList = (List<OrderItem>) serverResponse.getData();
-
         List<OrderItemVo> orderItemVoList = Lists.newArrayList();
-
         BigDecimal payment = new BigDecimal("0");
         for (OrderItem orderItem : orderItemList) {
             payment = BigDecimalUtil.add(payment.doubleValue(), orderItem.getTotalPrice().doubleValue());
@@ -327,7 +351,14 @@ public class OrderServiceImpl implements IOrderService {
         return ServerResponse.createBySuccess(orderProductVo);
     }
 
-
+    /*
+     * @Description: 获取订单详情
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:58   
+     * @param: [userId, orderNo]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.OrderVo>
+     */
     public ServerResponse<OrderVo> getOrderDetail(Integer userId, Long orderNo) {
         Order order = orderMapper.selectByUserIdAndOrderNo(userId, orderNo);
         if (order != null) {
@@ -338,7 +369,14 @@ public class OrderServiceImpl implements IOrderService {
         return ServerResponse.createByErrorMessage("没有找到该订单");
     }
 
-
+    /*
+     * @Description: 获取订单列表
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:58   
+     * @param: [userId, pageNum, pageSize]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     public ServerResponse<PageInfo> getOrderList(Integer userId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Order> orderList = orderMapper.selectByUserId(userId);
@@ -365,7 +403,14 @@ public class OrderServiceImpl implements IOrderService {
         return orderVoList;
     }
 
-
+    /*
+     * @Description: 支付接口
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:23   
+     * @param: [orderNo, userId, path]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse pay(Long orderNo, Integer userId, String path) {
         Map<String, String> resultMap = Maps.newHashMap();
         Order order = orderMapper.selectByUserIdAndOrderNo(userId, orderNo);
@@ -381,7 +426,7 @@ public class OrderServiceImpl implements IOrderService {
 
 
         // (必填) 订单标题，粗略描述用户的支付目的。如“xxx品牌xxx门店当面付扫码消费”
-        String subject = new StringBuilder().append("happymmall扫码支付,订单号:").append(outTradeNo).toString();
+        String subject = new StringBuilder().append("mmall扫码支付,订单号:").append(outTradeNo).toString();
 
 
         // (必填) 订单总金额，单位为元，不能超过1亿元
@@ -494,14 +539,21 @@ public class OrderServiceImpl implements IOrderService {
         }
     }
 
-
+    /*
+     * @Description: 支付宝回调
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:48   
+     * @param: [params]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse aliCallback(Map<String, String> params) {
         Long orderNo = Long.parseLong(params.get("out_trade_no"));
         String tradeNo = params.get("trade_no");
         String tradeStatus = params.get("trade_status");
         Order order = orderMapper.selectByOrderNo(orderNo);
         if (order == null) {
-            return ServerResponse.createByErrorMessage("非快乐慕商城的订单,回调忽略");
+            return ServerResponse.createByErrorMessage("非mmall的订单,回调忽略");
         }
         if (order.getStatus() >= Const.OrderStatusEnum.PAID.getCode()) {
             return ServerResponse.createBySuccess("支付宝重复调用");
@@ -518,9 +570,7 @@ public class OrderServiceImpl implements IOrderService {
         payInfo.setPayPlatform(Const.PayPlatformEnum.ALIPAY.getCode());
         payInfo.setPlatformNumber(tradeNo);
         payInfo.setPlatformStatus(tradeStatus);
-
         payInfoMapper.insert(payInfo);
-
         return ServerResponse.createBySuccess();
     }
 

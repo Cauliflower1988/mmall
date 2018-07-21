@@ -22,12 +22,28 @@ public class ProductController {
     @Autowired
     private IProductService iProductService;
 
+    /*
+     * @Description: 商品详情
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 17:19
+     * @param: [productId]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.ProductDetailVo>
+     */
     @RequestMapping("detail.do")
     @ResponseBody
     public ServerResponse<ProductDetailVo> detail(Integer productId) {
         return iProductService.getProductDetail(productId);
     }
 
+    /*
+     * @Description: 商品列表
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 17:19
+     * @param: [keyword, categoryId, pageNum, pageSize, orderBy]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     @RequestMapping("list.do")
     @ResponseBody
     public ServerResponse<PageInfo> list(@RequestParam(value = "keyword", required = false) String keyword,

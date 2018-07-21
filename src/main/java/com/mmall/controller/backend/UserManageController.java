@@ -23,7 +23,14 @@ import javax.servlet.http.HttpSession;
 public class UserManageController {
     @Autowired
     private IUserService iUserService;
-
+    /*
+     * @Description: 管理员登录
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 15:44
+     * @param: [username, password, session]
+     * @return: com.mmall.common.ServerResponse<com.mmall.pojo.User>
+     */
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session) {

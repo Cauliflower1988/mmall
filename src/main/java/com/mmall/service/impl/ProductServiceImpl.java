@@ -30,7 +30,6 @@ import java.util.List;
  * @Description:
  */
 @Service("iProductService")
-
 public class ProductServiceImpl implements IProductService {
 
     @Autowired
@@ -42,6 +41,14 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private ICategoryService iCategoryService;
 
+    /*
+     * @Description: 保存或新增产品
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:18   
+     * @param: [product]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse saveOrUpdateProduct(Product product) {
         if (product != null) {
             if (StringUtils.isNotBlank(product.getSubImages())) {
@@ -50,7 +57,6 @@ public class ProductServiceImpl implements IProductService {
                     product.setMainImage(subImageArray[0]);
                 }
             }
-
             if (product.getId() != null) {
                 int rowCount = productMapper.updateByPrimaryKey(product);
                 if (rowCount > 0) {
@@ -68,10 +74,17 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createByErrorMessage("新增或更新产品参数不正确");
     }
 
+    /*
+     * @Description: 设置产品状态
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:21   
+     * @param: [productId, status]
+     * @return: com.mmall.common.ServerResponse<java.lang.String>
+     */
     public ServerResponse<String> setSaleStatus(Integer productId, Integer status) {
         if (productId == null || status == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
-
         }
         Product product = new Product();
         product.setId(productId);
@@ -83,6 +96,14 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createByErrorMessage("修改产品销售状态失败");
     }
 
+    /*
+     * @Description: 产品详情
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:24   
+     * @param: [productId]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.ProductDetailVo>
+     */
     public ServerResponse<ProductDetailVo> manageProductDetail(Integer productId) {
         if (productId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -91,7 +112,7 @@ public class ProductServiceImpl implements IProductService {
         if (product == null) {
             return ServerResponse.createByErrorMessage("产品已下架或者删除");
         }
-        //VO对象--value object
+        //VO对象--value object（一期）
         //POJO-BO(business object)-->VO(view object)
         ProductDetailVo productDetailVo = assembleProductDetailVo(product);
         return ServerResponse.createBySuccess(productDetailVo);
@@ -110,7 +131,7 @@ public class ProductServiceImpl implements IProductService {
         productDetailVo.setStatus(product.getStatus());
         productDetailVo.setStock(product.getStock());
 
-        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happymmall.com/"));
+        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.verynavi.com/"));
 
         Category category = categoryMapper.selectByPrimaryKey(product.getCategoryId());
         if (category == null) {
@@ -124,13 +145,20 @@ public class ProductServiceImpl implements IProductService {
         return productDetailVo;
     }
 
+    /*
+     * @Description: 获取商品列表
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:39
+     * @param: [pageNum, pageSize]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     public ServerResponse<PageInfo> getProductList(int pageNum, int pageSize) {
         //startPage--start
         //填充自己的sql查询逻辑
         //pageHelper-收尾
         PageHelper.startPage(pageNum, pageSize);
         List<Product> productList = productMapper.selectList();
-
         List<ProductListVo> productListVoList = Lists.newArrayList();
         for (Product productItem : productList) {
             ProductListVo productListVo = assembleProductListVo(productItem);
@@ -146,7 +174,7 @@ public class ProductServiceImpl implements IProductService {
         productListVo.setId(product.getId());
         productListVo.setName(product.getName());
         productListVo.setCategoryId(product.getCategoryId());
-        productListVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happymmall.com/"));
+        productListVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.verynavi.com/"));
         productListVo.setMainImage(product.getMainImage());
         productListVo.setPrice(product.getPrice());
         productListVo.setSubtitle(product.getSubtitle());
@@ -154,6 +182,14 @@ public class ProductServiceImpl implements IProductService {
         return productListVo;
     }
 
+    /*
+     * @Description: 搜索商品
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:45   
+     * @param: [productName, productId, pageNum, pageSize]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     public ServerResponse<PageInfo> searchProduct(String productName, Integer productId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isNotBlank(productName)) {
@@ -170,7 +206,14 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createBySuccess(pageResult);
     }
 
-
+    /*
+     * @Description: 获取商品详情
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 17:21   
+     * @param: [productId]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.ProductDetailVo>
+     */
     public ServerResponse<ProductDetailVo> getProductDetail(Integer productId) {
         if (productId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
@@ -186,12 +229,19 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createBySuccess(productDetailVo);
     }
 
+    /*
+     * @Description: 通过关键字获取商品
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 17:24   
+     * @param: [keyword, categoryId, pageNum, pageSize, orderBy]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     public ServerResponse<PageInfo> getProductByKeywordCategory(String keyword, Integer categoryId, int pageNum, int pageSize, String orderBy) {
         if (StringUtils.isBlank(keyword) && categoryId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
         List<Integer> categoryIdList = new ArrayList<Integer>();
-
         if (categoryId != null) {
             Category category = categoryMapper.selectByPrimaryKey(categoryId);
             if (category == null && StringUtils.isBlank(keyword)) {
@@ -206,7 +256,6 @@ public class ProductServiceImpl implements IProductService {
         if (StringUtils.isNotBlank(keyword)) {
             keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
         }
-
         PageHelper.startPage(pageNum, pageSize);
         //排序处理
         if (StringUtils.isNotBlank(orderBy)) {

@@ -26,12 +26,19 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/manage/order")
 public class OrderManageController {
 
-
     @Autowired
     private IUserService iUserService;
     @Autowired
     private IOrderService iOrderService;
 
+    /*
+     * @Description: 订单列表
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:53   
+     * @param: [session, pageNum, pageSize]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     @RequestMapping("list.do")
     @ResponseBody
     public ServerResponse<PageInfo> orderList(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -49,7 +56,15 @@ public class OrderManageController {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
     }
-
+    
+    /*
+     * @Description: 订单详情
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:53   
+     * @param: [session, orderNo]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.OrderVo>
+     */
     @RequestMapping("detail.do")
     @ResponseBody
     public ServerResponse<OrderVo> orderDetail(HttpSession session, Long orderNo) {
@@ -68,7 +83,14 @@ public class OrderManageController {
         }
     }
 
-
+    /*
+     * @Description: 订单搜索
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:54
+     * @param: [session, orderNo, pageNum, pageSize]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     @RequestMapping("search.do")
     @ResponseBody
     public ServerResponse<PageInfo> orderSearch(HttpSession session, Long orderNo, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -86,7 +108,14 @@ public class OrderManageController {
         }
     }
 
-
+    /*
+     * @Description: 发货
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:54   
+     * @param: [session, orderNo]
+     * @return: com.mmall.common.ServerResponse<java.lang.String>
+     */
     @RequestMapping("send_goods.do")
     @ResponseBody
     public ServerResponse<String> orderSendGoods(HttpSession session, Long orderNo) {

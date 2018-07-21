@@ -29,7 +29,14 @@ public class CategoryManageController {
     @Autowired
     private ICategoryService iCategoryService;
 
-
+    /*
+     * @Description: 增加分类
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 15:50
+     * @param: [session, categoryName, parentId]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("add_category.do")
     @ResponseBody
     public ServerResponse addCategory(HttpSession session, String categoryName, @RequestParam(value = "parentId", defaultValue = "0") int parentId) {
@@ -47,6 +54,14 @@ public class CategoryManageController {
         }
     }
 
+    /*
+     * @Description: 设置分类名
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 15:55
+     * @param: [session, categoryId, categoryName]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("set_category_name.do")
     @ResponseBody
     public ServerResponse setCategoryName(HttpSession session, Integer categoryId, String categoryName) {
@@ -62,6 +77,14 @@ public class CategoryManageController {
         }
     }
 
+    /*
+     * @Description: 获取平级分类信息
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 15:58
+     * @param: [session, categoryId]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("get_category.do")
     @ResponseBody
     public ServerResponse getChildrenParallelCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
@@ -70,7 +93,6 @@ public class CategoryManageController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录");
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
-
             //查询子节点的category信息，并且不递归，保持平级
             return iCategoryService.getChildrenParallelCategory(categoryId);
         } else {
@@ -79,6 +101,14 @@ public class CategoryManageController {
 
     }
 
+    /*
+     * @Description: 获取当前分类id并且递归查询子节点的分类id
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:01
+     * @param: [session, categoryId]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("get_deep_category.do")
     @ResponseBody
     public ServerResponse getCategoryAndDeepChildrenCategory(HttpSession session, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {

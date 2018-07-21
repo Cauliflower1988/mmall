@@ -41,24 +41,38 @@ public class ProductManageController {
     @Autowired
     private IFileService iFileService;
 
+    /*
+     * @Description: 保存商品
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:16
+     * @param: [session, product]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("save.do")
     @ResponseBody
     public ServerResponse productSave(HttpSession session, Product product) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充我们增加产品的业务逻辑
             return iProductService.saveOrUpdateProduct(product);
-
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
 
     }
 
+    /*
+     * @Description: 设置产品上下架
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:21   
+     * @param: [session, productId, status]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("set_sale_status.do")
     @ResponseBody
     public ServerResponse setSaleStatus(HttpSession session, Integer productId, Integer status) {
@@ -76,7 +90,6 @@ public class ProductManageController {
 
     }
 
-
     /*
      * @Description: 获取产品详情
      *
@@ -91,12 +104,10 @@ public class ProductManageController {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
             return iProductService.manageProductDetail(productId);
-
         } else {
             return ServerResponse.createByErrorMessage("无权限操作");
         }
@@ -116,7 +127,6 @@ public class ProductManageController {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务
@@ -126,13 +136,20 @@ public class ProductManageController {
         }
     }
 
+    /*
+     * @Description: 商品搜索
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 16:44   
+     * @param: [session, productName, productId, pageNum, pageSize]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("search.do")
     @ResponseBody
     public ServerResponse productSearch(HttpSession session, String productName, Integer productId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录,请登录管理员");
-
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //填充业务

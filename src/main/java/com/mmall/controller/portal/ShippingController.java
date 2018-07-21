@@ -27,6 +27,14 @@ public class ShippingController {
     @Autowired
     private IShippingService iShippingService;
 
+    /*
+     * @Description: 增加地址
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:04   
+     * @param: [session, shipping]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("add.do")
     @ResponseBody
     public ServerResponse add(HttpSession session, Shipping shipping) {
@@ -37,6 +45,14 @@ public class ShippingController {
         return iShippingService.add(user.getId(), shipping);
     }
 
+    /*
+     * @Description: 删除地址
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:07   
+     * @param: [session, shippingId]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("del.do")
     @ResponseBody
     public ServerResponse del(HttpSession session, Integer shippingId) {
@@ -47,6 +63,14 @@ public class ShippingController {
         return iShippingService.del(user.getId(), shippingId);
     }
 
+    /*
+     * @Description: 更新地址
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:09
+     * @param: [session, shipping]
+     * @return: com.mmall.common.ServerResponse
+     */
     @RequestMapping("update.do")
     @ResponseBody
     public ServerResponse update(HttpSession session, Shipping shipping) {
@@ -58,6 +82,14 @@ public class ShippingController {
     }
 
 
+    /*
+     * @Description: 查询地址
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:12   
+     * @param: [session, shippingId]
+     * @return: com.mmall.common.ServerResponse<com.mmall.pojo.Shipping>
+     */
     @RequestMapping("select.do")
     @ResponseBody
     public ServerResponse<Shipping> select(HttpSession session, Integer shippingId) {
@@ -68,7 +100,14 @@ public class ShippingController {
         return iShippingService.select(user.getId(), shippingId);
     }
 
-
+    /*
+     * @Description: 分页
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:14
+     * @param: [pageNum, pageSize, session]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     @RequestMapping("list.do")
     @ResponseBody
     public ServerResponse<PageInfo> list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,

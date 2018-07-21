@@ -42,7 +42,7 @@ public class FTPUtil {
         boolean uploaded = true;
         FileInputStream fis = null;
         //连接FTP服务器
-        if (connectServer(this.getIp(), this.getPort(), this.getUser(), this.getPwd())) {
+        if (connectServer(this.ip, this.port, this.user, this.pwd)) {
             try {
                 ftpClient.changeWorkingDirectory(remotePath);
                 ftpClient.setBufferSize(1024);
@@ -53,7 +53,6 @@ public class FTPUtil {
                     fis = new FileInputStream(fileItem);
                     ftpClient.storeFile(fileItem.getName(), fis);
                 }
-
             } catch (IOException e) {
                 logger.error("上传文件异常", e);
                 uploaded = false;

@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * @Author: Geekerstar(jikewenku.com)
  * @Date: 2018/6/22 9:36
- * @Description:
+ * @Description:通用的响应对象
  */
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 //保证序列化JSon的时候，如果是null的对象，key也会消失

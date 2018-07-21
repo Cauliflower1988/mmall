@@ -24,6 +24,14 @@ public class ShippingServiceImpl implements IShippingService {
     @Autowired
     private ShippingMapper shippingMapper;
 
+    /*
+     * @Description: 增加地址
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:05
+     * @param: [userId, shipping]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse add(Integer userId, Shipping shipping) {
         shipping.setUserId(userId);
         int rowCount = shippingMapper.insert(shipping);
@@ -35,6 +43,14 @@ public class ShippingServiceImpl implements IShippingService {
         return ServerResponse.createByErrorMessage("新建地址失败");
     }
 
+    /*
+     * @Description: 删除地址
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:07   
+     * @param: [userId, shippingId]
+     * @return: com.mmall.common.ServerResponse<java.lang.String>
+     */
     public ServerResponse<String> del(Integer userId, Integer shippingId) {
         int resultCount = shippingMapper.deleteByShippingIdUserId(userId, shippingId);
         if (resultCount > 0) {
@@ -43,6 +59,14 @@ public class ShippingServiceImpl implements IShippingService {
         return ServerResponse.createByErrorMessage("删除地址失败");
     }
 
+    /*
+     * @Description: 更新地址
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:10   
+     * @param: [userId, shipping]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse update(Integer userId, Shipping shipping) {
         shipping.setUserId(userId);
         int rowCount = shippingMapper.updateByShipping(shipping);
@@ -52,6 +76,14 @@ public class ShippingServiceImpl implements IShippingService {
         return ServerResponse.createByErrorMessage("更新地址失败");
     }
 
+    /*
+     * @Description: 查询地址
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:12   
+     * @param: [userId, shippingId]
+     * @return: com.mmall.common.ServerResponse<com.mmall.pojo.Shipping>
+     */
     public ServerResponse<Shipping> select(Integer userId, Integer shippingId) {
         Shipping shipping = shippingMapper.selectByShippingIdUserId(userId, shippingId);
         if (shipping == null) {
@@ -61,7 +93,14 @@ public class ShippingServiceImpl implements IShippingService {
     }
 
 
-    //分页列表
+    /*
+     * @Description: 分页接口
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 21:14
+     * @param: [userId, pageNum, pageSize]
+     * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
+     */
     public ServerResponse<PageInfo> list(Integer userId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Shipping> shippingList = shippingMapper.selectByUserId(userId);

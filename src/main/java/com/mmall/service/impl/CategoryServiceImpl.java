@@ -30,6 +30,14 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    /*
+     * @Description: 添加分类
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 15:56
+     * @param: [categoryName, parentId]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse addCategory(String categoryName, Integer parentId) {
         if (parentId == null || StringUtils.isBlank(categoryName)) {
             return ServerResponse.createByErrorMessage("添加品类参数错误");
@@ -47,6 +55,14 @@ public class CategoryServiceImpl implements ICategoryService {
         return ServerResponse.createByErrorMessage("添加品类失败");
     }
 
+    /*
+     * @Description: 更新分类名称
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 15:56
+     * @param: [categoryId, categoryName]
+     * @return: com.mmall.common.ServerResponse
+     */
     public ServerResponse updateCategoryName(Integer categoryId, String categoryName) {
         if (categoryId == null || StringUtils.isBlank(categoryName)) {
             return ServerResponse.createByErrorMessage("更新品类参数错误");
@@ -62,6 +78,14 @@ public class CategoryServiceImpl implements ICategoryService {
         return ServerResponse.createByErrorMessage("更新品类名字失败");
     }
 
+    /*
+     * @Description: 获取孩子节点的分类信息
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 15:59   
+     * @param: [categoryId]
+     * @return: com.mmall.common.ServerResponse<java.util.List<com.mmall.pojo.Category>>
+     */
     public ServerResponse<List<Category>> getChildrenParallelCategory(Integer categoryId) {
         List<Category> categoryList = categoryMapper.selectCategoryChildrenByParentId(categoryId);
         if (CollectionUtils.isEmpty(categoryList)) {
