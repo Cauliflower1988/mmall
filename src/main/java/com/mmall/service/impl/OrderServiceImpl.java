@@ -425,7 +425,7 @@ public class OrderServiceImpl implements IOrderService {
 
 
         // (必填) 订单标题，粗略描述用户的支付目的。如“xxx品牌xxx门店当面付扫码消费”
-        String subject = new StringBuilder().append("mmall扫码支付,订单号:").append(outTradeNo).toString();
+        String subject = new StringBuilder().append("jikeGo扫码支付,订单号:").append(outTradeNo).toString();
 
 
         // (必填) 订单总金额，单位为元，不能超过1亿元
@@ -552,7 +552,7 @@ public class OrderServiceImpl implements IOrderService {
         String tradeStatus = params.get("trade_status");
         Order order = orderMapper.selectByOrderNo(orderNo);
         if (order == null) {
-            return ServerResponse.createByErrorMessage("非mmall的订单,回调忽略");
+            return ServerResponse.createByErrorMessage("非jikeGo的订单,回调忽略");
         }
         if (order.getStatus() >= Const.OrderStatusEnum.PAID.getCode()) {
             return ServerResponse.createBySuccess("支付宝重复调用");

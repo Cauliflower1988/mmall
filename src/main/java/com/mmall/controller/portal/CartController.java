@@ -9,7 +9,7 @@ import com.mmall.util.CookieUtil;
 import com.mmall.util.JsonUtil;
 import com.mmall.util.RedisShardedPoolUtil;
 import com.mmall.vo.CartVo;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +28,28 @@ public class CartController {
     @Autowired
     private ICartService iCartService;
 
+    /*
+     * @Description: 查询
+     *
+     * @auther: Geekerstar(jikewenku.com)
+     * @date: 2018/7/21 20:19
+     * @param: [session]
+     * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
+     */
+    @RequestMapping("list.do")
+    @ResponseBody
+    public ServerResponse<CartVo> list(HttpServletRequest httpServletRequest) {
+        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
+        if(StringUtils.isEmpty(loginToken)){
+            return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
+        }
+        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
+        User user = JsonUtil.string2Obj(userJsonStr,User.class);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iCartService.list(user.getId());
+    }
 
     /*
      * @Description: 添加到购物车
@@ -98,28 +120,7 @@ public class CartController {
         return iCartService.deleteProduct(user.getId(), productIds);
     }
 
-    /*
-     * @Description: 查询
-     *
-     * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 20:19
-     * @param: [session]
-     * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
-     */
-    @RequestMapping("list.do")
-    @ResponseBody
-    public ServerResponse<CartVo> list(HttpServletRequest httpServletRequest) {
-        String loginToken = CookieUtil.readLoginToken(httpServletRequest);
-        if(StringUtils.isEmpty(loginToken)){
-            return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
-        }
-        String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-        User user = JsonUtil.string2Obj(userJsonStr,User.class);
-        if (user == null) {
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
-        }
-        return iCartService.list(user.getId());
-    }
+
 
     /*
      * @Description: 全选
@@ -183,7 +184,8 @@ public class CartController {
             return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
         }
         String userJsonStr = RedisShardedPoolUtil.get(loginToken);
-        User user = JsonUtil.string2Obj(userJsonStr,User.class);        if (user == null) {
+        User user = JsonUtil.string2Obj(userJsonStr,User.class);
+        if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
         return iCartService.selectOrUnSelect(user.getId(), productId, Const.Cart.CHECKED);

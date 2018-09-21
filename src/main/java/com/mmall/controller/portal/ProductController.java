@@ -63,6 +63,68 @@ public class ProductController {
         return iProductService.getProductByKeywordCategory(keyword, categoryId, pageNum, pageSize, orderBy);
     }
 
+    //http://www.verynavi.com/product/手机/100012/1/10/price_asc
+    @RequestMapping(value = "/{keyword}/{categoryId}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<PageInfo> listRESTful(@PathVariable(value = "keyword")String keyword,
+                                                @PathVariable(value = "categoryId")Integer categoryId,
+                                                @PathVariable(value = "pageNum") Integer pageNum,
+                                                @PathVariable(value = "pageSize") Integer pageSize,
+                                                @PathVariable(value = "orderBy") String orderBy){
+        if(pageNum == null){
+            pageNum = 1;
+        }
+        if(pageSize == null){
+            pageSize = 10;
+        }
+        if(StringUtils.isBlank(orderBy)){
+            orderBy = "price_asc";
+        }
+
+        return iProductService.getProductByKeywordCategory(keyword,categoryId,pageNum,pageSize,orderBy);
+    }
+
+
+    //    http://www.verynavi.com/product/100012/1/10/price_asc
+    @RequestMapping(value = "/{categoryId}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<PageInfo> listRESTfulBadcase(@PathVariable(value = "categoryId")Integer categoryId,
+                                                       @PathVariable(value = "pageNum") Integer pageNum,
+                                                       @PathVariable(value = "pageSize") Integer pageSize,
+                                                       @PathVariable(value = "orderBy") String orderBy){
+        if(pageNum == null){
+            pageNum = 1;
+        }
+        if(pageSize == null){
+            pageSize = 10;
+        }
+        if(StringUtils.isBlank(orderBy)){
+            orderBy = "price_asc";
+        }
+
+        return iProductService.getProductByKeywordCategory("",categoryId,pageNum,pageSize,orderBy);
+    }
+
+
+    @RequestMapping(value = "/{keyword}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<PageInfo> listRESTfulBadcase(@PathVariable(value = "keyword")String keyword,
+                                                       @PathVariable(value = "pageNum") Integer pageNum,
+                                                       @PathVariable(value = "pageSize") Integer pageSize,
+                                                       @PathVariable(value = "orderBy") String orderBy){
+        if(pageNum == null){
+            pageNum = 1;
+        }
+        if(pageSize == null){
+            pageSize = 10;
+        }
+        if(StringUtils.isBlank(orderBy)){
+            orderBy = "price_asc";
+        }
+
+        return iProductService.getProductByKeywordCategory(keyword,null,pageNum,pageSize,orderBy);
+    }
+
     //http://www.verynavi.com/product/keyword/手机/1/10/price_asc
     @RequestMapping(value = "/keyword/{keyword}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
     @ResponseBody
