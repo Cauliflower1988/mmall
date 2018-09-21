@@ -39,7 +39,7 @@ public class ProductController {
         return iProductService.getProductDetail(productId);
     }
 
-    @RequestMapping(value = "/{productId}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<ProductDetailVo> detailRESTful(@PathVariable Integer productId) {
         return iProductService.getProductDetail(productId);
@@ -64,106 +64,106 @@ public class ProductController {
     }
 
     //http://www.verynavi.com/product/手机/100012/1/10/price_asc
-    @RequestMapping(value = "/{keyword}/{categoryId}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{keyword}/{categoryId}/{pageNum}/{pageSize}/{orderBy}", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<PageInfo> listRESTful(@PathVariable(value = "keyword")String keyword,
-                                                @PathVariable(value = "categoryId")Integer categoryId,
+    public ServerResponse<PageInfo> listRESTful(@PathVariable(value = "keyword") String keyword,
+                                                @PathVariable(value = "categoryId") Integer categoryId,
                                                 @PathVariable(value = "pageNum") Integer pageNum,
                                                 @PathVariable(value = "pageSize") Integer pageSize,
-                                                @PathVariable(value = "orderBy") String orderBy){
-        if(pageNum == null){
+                                                @PathVariable(value = "orderBy") String orderBy) {
+        if (pageNum == null) {
             pageNum = 1;
         }
-        if(pageSize == null){
+        if (pageSize == null) {
             pageSize = 10;
         }
-        if(StringUtils.isBlank(orderBy)){
+        if (StringUtils.isBlank(orderBy)) {
             orderBy = "price_asc";
         }
 
-        return iProductService.getProductByKeywordCategory(keyword,categoryId,pageNum,pageSize,orderBy);
+        return iProductService.getProductByKeywordCategory(keyword, categoryId, pageNum, pageSize, orderBy);
     }
 
 
     //    http://www.verynavi.com/product/100012/1/10/price_asc
-    @RequestMapping(value = "/{categoryId}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{categoryId}/{pageNum}/{pageSize}/{orderBy}", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<PageInfo> listRESTfulBadcase(@PathVariable(value = "categoryId")Integer categoryId,
+    public ServerResponse<PageInfo> listRESTfulBadcase(@PathVariable(value = "categoryId") Integer categoryId,
                                                        @PathVariable(value = "pageNum") Integer pageNum,
                                                        @PathVariable(value = "pageSize") Integer pageSize,
-                                                       @PathVariable(value = "orderBy") String orderBy){
-        if(pageNum == null){
+                                                       @PathVariable(value = "orderBy") String orderBy) {
+        if (pageNum == null) {
             pageNum = 1;
         }
-        if(pageSize == null){
+        if (pageSize == null) {
             pageSize = 10;
         }
-        if(StringUtils.isBlank(orderBy)){
+        if (StringUtils.isBlank(orderBy)) {
             orderBy = "price_asc";
         }
 
-        return iProductService.getProductByKeywordCategory("",categoryId,pageNum,pageSize,orderBy);
+        return iProductService.getProductByKeywordCategory("", categoryId, pageNum, pageSize, orderBy);
     }
 
 
-    @RequestMapping(value = "/{keyword}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{keyword}/{pageNum}/{pageSize}/{orderBy}", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<PageInfo> listRESTfulBadcase(@PathVariable(value = "keyword")String keyword,
+    public ServerResponse<PageInfo> listRESTfulBadcase(@PathVariable(value = "keyword") String keyword,
                                                        @PathVariable(value = "pageNum") Integer pageNum,
                                                        @PathVariable(value = "pageSize") Integer pageSize,
-                                                       @PathVariable(value = "orderBy") String orderBy){
-        if(pageNum == null){
+                                                       @PathVariable(value = "orderBy") String orderBy) {
+        if (pageNum == null) {
             pageNum = 1;
         }
-        if(pageSize == null){
+        if (pageSize == null) {
             pageSize = 10;
         }
-        if(StringUtils.isBlank(orderBy)){
+        if (StringUtils.isBlank(orderBy)) {
             orderBy = "price_asc";
         }
 
-        return iProductService.getProductByKeywordCategory(keyword,null,pageNum,pageSize,orderBy);
+        return iProductService.getProductByKeywordCategory(keyword, null, pageNum, pageSize, orderBy);
     }
 
     //http://www.verynavi.com/product/keyword/手机/1/10/price_asc
-    @RequestMapping(value = "/keyword/{keyword}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
+    @RequestMapping(value = "/keyword/{keyword}/{pageNum}/{pageSize}/{orderBy}", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<PageInfo> listRESTful(@PathVariable(value = "keyword")String keyword,
+    public ServerResponse<PageInfo> listRESTful(@PathVariable(value = "keyword") String keyword,
                                                 @PathVariable(value = "pageNum") Integer pageNum,
                                                 @PathVariable(value = "pageSize") Integer pageSize,
-                                                @PathVariable(value = "orderBy") String orderBy){
-        if(pageNum == null){
+                                                @PathVariable(value = "orderBy") String orderBy) {
+        if (pageNum == null) {
             pageNum = 1;
         }
-        if(pageSize == null){
+        if (pageSize == null) {
             pageSize = 10;
         }
-        if(StringUtils.isBlank(orderBy)){
+        if (StringUtils.isBlank(orderBy)) {
             orderBy = "price_asc";
         }
 
-        return iProductService.getProductByKeywordCategory(keyword,null,pageNum,pageSize,orderBy);
+        return iProductService.getProductByKeywordCategory(keyword, null, pageNum, pageSize, orderBy);
     }
 
 
     //http://www.verynavi.com/product/category/100012/1/10/price_asc
-    @RequestMapping(value = "/category/{categoryId}/{pageNum}/{pageSize}/{orderBy}",method = RequestMethod.GET)
+    @RequestMapping(value = "/category/{categoryId}/{pageNum}/{pageSize}/{orderBy}", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<PageInfo> listRESTful(@PathVariable(value = "categoryId")Integer categoryId,
+    public ServerResponse<PageInfo> listRESTful(@PathVariable(value = "categoryId") Integer categoryId,
                                                 @PathVariable(value = "pageNum") Integer pageNum,
                                                 @PathVariable(value = "pageSize") Integer pageSize,
-                                                @PathVariable(value = "orderBy") String orderBy){
-        if(pageNum == null){
+                                                @PathVariable(value = "orderBy") String orderBy) {
+        if (pageNum == null) {
             pageNum = 1;
         }
-        if(pageSize == null){
+        if (pageSize == null) {
             pageSize = 10;
         }
-        if(StringUtils.isBlank(orderBy)){
+        if (StringUtils.isBlank(orderBy)) {
             orderBy = "price_asc";
         }
 
-        return iProductService.getProductByKeywordCategory("",categoryId,pageNum,pageSize,orderBy);
+        return iProductService.getProductByKeywordCategory("", categoryId, pageNum, pageSize, orderBy);
     }
 
 }

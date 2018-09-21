@@ -39,7 +39,7 @@ public class OrderManageController {
      * @Description: 订单列表
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:53   
+     * @date: 2018/7/21 21:53
      * @param: [session, pageNum, pageSize]
      * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
      */
@@ -67,12 +67,12 @@ public class OrderManageController {
         //全部通过拦截器验证是否登录及权限
         return iOrderService.manageList(pageNum, pageSize);
     }
-    
+
     /*
      * @Description: 订单详情
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:53   
+     * @date: 2018/7/21 21:53
      * @param: [session, orderNo]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.OrderVo>
      */
@@ -135,7 +135,7 @@ public class OrderManageController {
      * @Description: 发货
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:54   
+     * @date: 2018/7/21 21:54
      * @param: [session, orderNo]
      * @return: com.mmall.common.ServerResponse<java.lang.String>
      */

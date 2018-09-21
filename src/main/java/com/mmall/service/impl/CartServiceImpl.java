@@ -41,7 +41,7 @@ public class CartServiceImpl implements ICartService {
      * @Description: 添加购物车
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 20:44   
+     * @date: 2018/7/21 20:44
      * @param: [userId, productId, count]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
      */
@@ -72,7 +72,7 @@ public class CartServiceImpl implements ICartService {
      * @Description: 更新购物车
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 20:45   
+     * @date: 2018/7/21 20:45
      * @param: [userId, productId, count]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
      */
@@ -92,7 +92,7 @@ public class CartServiceImpl implements ICartService {
      * @Description: 购物车中删除商品
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 20:47   
+     * @date: 2018/7/21 20:47
      * @param: [userId, productIds]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
      */
@@ -109,7 +109,7 @@ public class CartServiceImpl implements ICartService {
      * @Description: 查询
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 20:51   
+     * @date: 2018/7/21 20:51
      * @param: [userId]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
      */
@@ -122,7 +122,7 @@ public class CartServiceImpl implements ICartService {
      * @Description: 选择或者反选所有
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 20:54   
+     * @date: 2018/7/21 20:54
      * @param: [userId, productId, checked]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.CartVo>
      */

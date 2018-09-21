@@ -241,7 +241,7 @@
         order by create_time desc
     </select>
 
-    <update id="closeOrderByOrderId" parameterType="int" >
+    <update id="closeOrderByOrderId" parameterType="int">
         UPDATE mmall_order
         SET status = 0
         where id = #{id}

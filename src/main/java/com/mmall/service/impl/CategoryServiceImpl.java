@@ -82,7 +82,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @Description: 获取孩子节点的分类信息
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 15:59   
+     * @date: 2018/7/21 15:59
      * @param: [categoryId]
      * @return: com.mmall.common.ServerResponse<java.util.List<com.mmall.pojo.Category>>
      */

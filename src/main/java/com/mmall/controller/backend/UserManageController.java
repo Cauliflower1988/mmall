@@ -28,6 +28,7 @@ import javax.servlet.http.HttpSession;
 public class UserManageController {
     @Autowired
     private IUserService iUserService;
+
     /*
      * @Description: 管理员登录
      *
@@ -47,8 +48,8 @@ public class UserManageController {
 //                session.setAttribute(Const.CURRENT_USER, user);
 
                 //新增redis共享cookie，session的方式
-                CookieUtil.writeLoginToken(httpServletResponse,session.getId());
-                RedisShardedPoolUtil.setEx(session.getId(), JsonUtil.obj2String(response.getData()),Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
+                CookieUtil.writeLoginToken(httpServletResponse, session.getId());
+                RedisShardedPoolUtil.setEx(session.getId(), JsonUtil.obj2String(response.getData()), Const.RedisCacheExtime.REDIS_SESSION_EXTIME);
 
                 return response;
             } else {

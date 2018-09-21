@@ -47,7 +47,7 @@ public class ShippingServiceImpl implements IShippingService {
      * @Description: 删除地址
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:07   
+     * @date: 2018/7/21 21:07
      * @param: [userId, shippingId]
      * @return: com.mmall.common.ServerResponse<java.lang.String>
      */
@@ -63,7 +63,7 @@ public class ShippingServiceImpl implements IShippingService {
      * @Description: 更新地址
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:10   
+     * @date: 2018/7/21 21:10
      * @param: [userId, shipping]
      * @return: com.mmall.common.ServerResponse
      */
@@ -80,7 +80,7 @@ public class ShippingServiceImpl implements IShippingService {
      * @Description: 查询地址
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:12   
+     * @date: 2018/7/21 21:12
      * @param: [userId, shippingId]
      * @return: com.mmall.common.ServerResponse<com.mmall.pojo.Shipping>
      */

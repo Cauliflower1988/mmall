@@ -74,7 +74,7 @@ public class ProductManageController {
      * @Description: 设置产品上下架
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 16:21   
+     * @date: 2018/7/21 16:21
      * @param: [session, productId, status]
      * @return: com.mmall.common.ServerResponse
      */
@@ -164,7 +164,7 @@ public class ProductManageController {
      * @Description: 商品搜索
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 16:44   
+     * @date: 2018/7/21 16:44
      * @param: [session, productName, productId, pageNum, pageSize]
      * @return: com.mmall.common.ServerResponse
      */

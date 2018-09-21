@@ -45,7 +45,7 @@ public class ProductServiceImpl implements IProductService {
      * @Description: 保存或新增产品
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 16:18   
+     * @date: 2018/7/21 16:18
      * @param: [product]
      * @return: com.mmall.common.ServerResponse
      */
@@ -78,7 +78,7 @@ public class ProductServiceImpl implements IProductService {
      * @Description: 设置产品状态
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 16:21   
+     * @date: 2018/7/21 16:21
      * @param: [productId, status]
      * @return: com.mmall.common.ServerResponse<java.lang.String>
      */
@@ -100,7 +100,7 @@ public class ProductServiceImpl implements IProductService {
      * @Description: 产品详情
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 16:24   
+     * @date: 2018/7/21 16:24
      * @param: [productId]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.ProductDetailVo>
      */
@@ -186,7 +186,7 @@ public class ProductServiceImpl implements IProductService {
      * @Description: 搜索商品
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 16:45   
+     * @date: 2018/7/21 16:45
      * @param: [productName, productId, pageNum, pageSize]
      * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
      */
@@ -210,7 +210,7 @@ public class ProductServiceImpl implements IProductService {
      * @Description: 获取商品详情
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 17:21   
+     * @date: 2018/7/21 17:21
      * @param: [productId]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.ProductDetailVo>
      */
@@ -233,7 +233,7 @@ public class ProductServiceImpl implements IProductService {
      * @Description: 通过关键字获取商品
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 17:24   
+     * @date: 2018/7/21 17:24
      * @param: [keyword, categoryId, pageNum, pageSize, orderBy]
      * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
      */

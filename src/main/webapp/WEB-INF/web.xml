@@ -36,12 +36,12 @@
 
     <!-- V2.0spring session -->
     <!--<filter>-->
-        <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
-        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+    <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
+    <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
     <!--</filter>-->
     <!--<filter-mapping>-->
-        <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
-        <!--<url-pattern>*.do</url-pattern>-->
+    <!--<filter-name>springSessionRepositoryFilter</filter-name>-->
+    <!--<url-pattern>*.do</url-pattern>-->
     <!--</filter-mapping>-->
 
     <listener>
@@ -66,8 +66,8 @@
     </servlet>
 
     <!--<servlet-mapping>-->
-        <!--<servlet-name>dispatcher</servlet-name>-->
-        <!--<url-pattern>*.do</url-pattern>-->
+    <!--<servlet-name>dispatcher</servlet-name>-->
+    <!--<url-pattern>*.do</url-pattern>-->
     <!--</servlet-mapping>-->
 
     <servlet-mapping>

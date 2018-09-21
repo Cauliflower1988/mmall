@@ -201,7 +201,7 @@ public class OrderServiceImpl implements IOrderService {
      * @Description: 清空购物车
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:57   
+     * @date: 2018/7/21 21:57
      * @param: [cartList]
      * @return: void
      */
@@ -215,7 +215,7 @@ public class OrderServiceImpl implements IOrderService {
      * @Description: 减少库存
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:57   
+     * @date: 2018/7/21 21:57
      * @param: [orderItemList]
      * @return: void
      */
@@ -325,7 +325,7 @@ public class OrderServiceImpl implements IOrderService {
      * @Description: 从购物车中获取数据
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:57   
+     * @date: 2018/7/21 21:57
      * @param: [userId]
      * @return: com.mmall.common.ServerResponse
      */
@@ -354,7 +354,7 @@ public class OrderServiceImpl implements IOrderService {
      * @Description: 获取订单详情
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:58   
+     * @date: 2018/7/21 21:58
      * @param: [userId, orderNo]
      * @return: com.mmall.common.ServerResponse<com.mmall.vo.OrderVo>
      */
@@ -372,7 +372,7 @@ public class OrderServiceImpl implements IOrderService {
      * @Description: 获取订单列表
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:58   
+     * @date: 2018/7/21 21:58
      * @param: [userId, pageNum, pageSize]
      * @return: com.mmall.common.ServerResponse<com.github.pagehelper.PageInfo>
      */
@@ -406,7 +406,7 @@ public class OrderServiceImpl implements IOrderService {
      * @Description: 支付接口
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:23   
+     * @date: 2018/7/21 21:23
      * @param: [orderNo, userId, path]
      * @return: com.mmall.common.ServerResponse
      */
@@ -542,7 +542,7 @@ public class OrderServiceImpl implements IOrderService {
      * @Description: 支付宝回调
      *
      * @auther: Geekerstar(jikewenku.com)
-     * @date: 2018/7/21 21:48   
+     * @date: 2018/7/21 21:48
      * @param: [params]
      * @return: com.mmall.common.ServerResponse
      */
@@ -639,27 +639,27 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public void closeOrder(int hour) {
-        Date closeDateTime = DateUtils.addHours(new Date(),-hour);
-        List<Order> orderList = orderMapper.selectOrderStatusByCreateTime(Const.OrderStatusEnum.NO_PAY.getCode(),DateTimeUtil.dateToStr(closeDateTime));
+        Date closeDateTime = DateUtils.addHours(new Date(), -hour);
+        List<Order> orderList = orderMapper.selectOrderStatusByCreateTime(Const.OrderStatusEnum.NO_PAY.getCode(), DateTimeUtil.dateToStr(closeDateTime));
 
-        for(Order order : orderList){
+        for (Order order : orderList) {
             List<OrderItem> orderItemList = orderItemMapper.getByOrderNo(order.getOrderNo());
-            for(OrderItem orderItem : orderItemList){
+            for (OrderItem orderItem : orderItemList) {
 
                 //一定要用主键where条件，防止锁表。同时必须是支持MySQL的InnoDB。
                 Integer stock = productMapper.selectStockByProductId(orderItem.getProductId());
 
                 //考虑到已生成的订单里的商品，被删除的情况
-                if(stock == null){
+                if (stock == null) {
                     continue;
                 }
                 Product product = new Product();
                 product.setId(orderItem.getProductId());
-                product.setStock(stock+orderItem.getQuantity());
+                product.setStock(stock + orderItem.getQuantity());
                 productMapper.updateByPrimaryKeySelective(product);
             }
             orderMapper.closeOrderByOrderId(order.getId());
-            log.info("关闭订单OrderNo：{}",order.getOrderNo());
+            log.info("关闭订单OrderNo：{}", order.getOrderNo());
         }
     }
 
